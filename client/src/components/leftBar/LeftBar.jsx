@@ -14,6 +14,7 @@ import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import { Link } from "react-router-dom";
 
 const LeftBar = () => {
 
@@ -39,7 +40,9 @@ const LeftBar = () => {
           </div>
           <div className="item">
             <img src={Market} alt="" />
-            <span>Marketplace</span>
+            <Link to="market">
+              <span>Marketplace</span>
+            </Link>
           </div>
           <div className="item">
             <img src={Watch} alt="" />
