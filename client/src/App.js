@@ -5,7 +5,7 @@ import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
-import Marketplace from "./pages/marketplace/Marketplace";
+import Marketplace from "./pages/Marketplace/Marketplace";
 import "./style.scss";
 import {
   createBrowserRouter,
