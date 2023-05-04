@@ -6,11 +6,11 @@ export const getPosts = (req, res) => {
   const userId = req.query.userId;
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
-  console.log("loged in");
+  
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
-    console.log(userId);
+    console.log("userID:"+userId);
 
     const q =
       userId !== "undefined"
@@ -21,7 +21,6 @@ export const getPosts = (req, res) => {
 
     const values =
       userId !== "undefined" ? [userId] : [userInfo.id, userInfo.id];
-
     db.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(data);
