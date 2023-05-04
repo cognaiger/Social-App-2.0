@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS `social`;
 CREATE SCHEMA `social` ;
 
 CREATE TABLE `social`.`users` (
@@ -6,18 +7,19 @@ CREATE TABLE `social`.`users` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `coverPic` VARCHAR(100) NULL,
-  `profilePic` VARCHAR(100) NULL,
+  `coverPic` VARCHAR(300) NULL DEFAULT '',
+  `profilePic` VARCHAR(300) NULL DEFAULT '',
   `city` VARCHAR(45) NULL,
   `website` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
   
-CREATE TABLE `social`.`post` (
+CREATE TABLE `social`.`posts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `desc` VARCHAR(200) NULL,
   `img` VARCHAR(200) NULL,
   `userid` INT NULL,
+  `createdAt` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `userid_idx` (`userid` ASC) VISIBLE,
   CONSTRAINT `userid`
@@ -25,9 +27,6 @@ CREATE TABLE `social`.`post` (
     REFERENCES `social`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-    
-ALTER TABLE `social`.`post` 
-ADD COLUMN `createdAt` DATETIME NULL AFTER `userid`;
 
 CREATE TABLE `social`.`comments` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -46,7 +45,7 @@ CREATE TABLE `social`.`comments` (
     ON UPDATE CASCADE,
   CONSTRAINT `commentPostid`
     FOREIGN KEY (`postid`)
-    REFERENCES `social`.`post` (`id`)
+    REFERENCES `social`.`posts` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
     
@@ -63,7 +62,7 @@ CREATE TABLE `social`.`stories` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
     
-CREATE TABLE `social`.`relationship` (
+CREATE TABLE `social`.`relationships` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `followerUserid` INT NOT NULL,
   `followedUserid` INT NOT NULL,
@@ -97,10 +96,6 @@ CREATE TABLE `social`.`likes` (
     ON UPDATE CASCADE,
   CONSTRAINT `likePostPostid`
     FOREIGN KEY (`postid`)
-    REFERENCES `social`.`post` (`id`)
+    REFERENCES `social`.`posts` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-    
-ALTER TABLE `social`.`users` 
-CHANGE COLUMN `coverPic` `coverPic` VARCHAR(300) NULL DEFAULT NULL ,
-CHANGE COLUMN `profilePic` `profilePic` VARCHAR(300) NULL DEFAULT NULL ;
