@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS `social`;
 CREATE SCHEMA `social` ;
 
 CREATE TABLE `social`.`users` (
@@ -6,8 +7,8 @@ CREATE TABLE `social`.`users` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `coverPic` VARCHAR(300) NULL,
-  `profilePic` VARCHAR(300) NULL,
+  `coverPic` VARCHAR(300) NULL DEFAULT '',
+  `profilePic` VARCHAR(300) NULL DEFAULT '',
   `city` VARCHAR(45) NULL,
   `website` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
@@ -18,6 +19,7 @@ CREATE TABLE `social`.`posts` (
   `desc` VARCHAR(200) NULL,
   `img` VARCHAR(200) NULL,
   `userid` INT NULL,
+  `createdAt` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `userid_idx` (`userid` ASC) VISIBLE,
   CONSTRAINT `userid`
@@ -25,9 +27,6 @@ CREATE TABLE `social`.`posts` (
     REFERENCES `social`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-    
-ALTER TABLE `social`.`posts` 
-ADD COLUMN `createdAt` DATETIME NULL AFTER `userid`;
 
 CREATE TABLE `social`.`comments` (
   `id` INT NOT NULL AUTO_INCREMENT,
