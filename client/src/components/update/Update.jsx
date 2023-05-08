@@ -54,6 +54,7 @@ const Update = ({ setOpenUpdate , user}) => {
     let profileUrl;
     coverUrl = cover ? await upload(cover) : user.coverPic;
     profileUrl = profile ? await upload(profile) : user.profilePic;
+    console.log("coverpic is"+coverUrl+"and profile pic is"+profileUrl);
     
     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
     setOpenUpdate(false);
