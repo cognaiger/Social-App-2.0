@@ -3,7 +3,7 @@ import "./comments.scss";
 import { AuthContext } from "../../context/authContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-// import moment from "moment";
+import moment from "moment";
 
 const Comments = ({ postId }) => {
   const [desc, setDesc] = useState("");
@@ -48,7 +48,7 @@ const Comments = ({ postId }) => {
         <button onClick={handleClick}>Send</button>
       </div>
       {error
-        ? "Something went wrong"
+        ? "Something went wrong" + error
         : isLoading
         ? "loading"
         : data.map((comment) => (
@@ -59,7 +59,7 @@ const Comments = ({ postId }) => {
                 <p>{comment.desc}</p>
               </div>
               <span className="date">
-                {/* {moment(comment.createdAt).fromNow()} */}
+                {moment(comment.createdAt).fromNow()}
               </span>
             </div>
           ))}
