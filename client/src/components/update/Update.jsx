@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { makeRequest } from "../../axios";
 import "./update.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { AuthContext } from "../../context/authContext";
+
 
 const Update = ({ setOpenUpdate , user}) => {
   const [cover, setCover] = useState(null);
@@ -14,6 +16,8 @@ const Update = ({ setOpenUpdate , user}) => {
     city: user.city,
     website: user.website,
   });
+
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const upload = async (file) => {
     console.log(file)
@@ -54,9 +58,14 @@ const Update = ({ setOpenUpdate , user}) => {
     let profileUrl;
     coverUrl = cover ? await upload(cover) : user.coverPic;
     profileUrl = profile ? await upload(profile) : user.profilePic;
-    console.log("coverpic is"+coverUrl+"and profile pic is"+profileUrl);
     
     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+    
+    const response = await makeRequest.get("/users/find/" + currentUser.id);
+    setCurrentUser(response.data);
+    console.log(response.data);
+    console.log(currentUser);
+
     setOpenUpdate(false);
     setCover(null);
     setProfile(null);
