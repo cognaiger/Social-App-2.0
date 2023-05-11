@@ -2,7 +2,7 @@ import "./navbar.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -36,7 +36,7 @@ const Navbar = () => {
             <div className="right">
               <PersonOutlinedIcon />
               <EmailOutlinedIcon />
-              <NotificationsOutlinedIcon />
+              <LogoutIcon />
               <Link
                 to={`/profile/${currentUser.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
