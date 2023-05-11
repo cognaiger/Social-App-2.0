@@ -20,6 +20,7 @@ const Login = () => {
 
   const { login } = useContext(AuthContext);
 
+  // click -> navigate
   const handleLogin = async (e) => {
     e.preventDefault();
     try {

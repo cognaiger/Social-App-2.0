@@ -17,12 +17,34 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(res.data);
   };
 
+  const logoutUser = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("user");
+
+    performLogout();
+  };
+
+  const performLogout = async () => {
+    try {
+      await axios.post("http://localhost:8800/api/auth/logout", null, {
+        withCredentials: true,
+      });
+
+      localStorage.removeItem("token");
+
+      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = "/login";
+    } catch (error) {
+      console.log("Error occured during logout: ", error);
+    }
+  }
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login }}>
+    <AuthContext.Provider value={{ currentUser, login, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );
