@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { makeRequest } from "../axios";
 
 export const AuthContext = createContext();
 
@@ -16,35 +17,29 @@ export const AuthContextProvider = ({ children }) => {
 
     setCurrentUser(res.data);
   };
-
-  const logoutUser = () => {
-    setCurrentUser(null);
-    localStorage.removeItem("user");
-
-    performLogout();
+ 
+  const updateCurrentUser = async () => {
+    try {
+      console.log("current USer"+currentUser);
+      const res = await makeRequest.get(`/users/find/${currentUser.id}`);
+      setCurrentUser(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const performLogout = async () => {
-    try {
-      await axios.post("http://localhost:8800/api/auth/logout", null, {
-        withCredentials: true,
-      });
-
-      localStorage.removeItem("token");
-
-      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      window.location.href = "/login";
-    } catch (error) {
-      console.log("Error occured during logout: ", error);
-    }
+  const logout = async () => {
+    setCurrentUser(null);
   }
+
+
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logoutUser }}>
+    <AuthContext.Provider value={{ currentUser, login, updateCurrentUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
