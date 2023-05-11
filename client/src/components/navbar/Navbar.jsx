@@ -11,12 +11,19 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
+import { makeRequest } from "../../axios";
 
 
 const Navbar = () => {
 
   const { toggle, darkMode } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    await makeRequest.post("/auth/logout");
+    logout();
+  };
+  
 
     return (
         <div className="navbar">
@@ -36,7 +43,9 @@ const Navbar = () => {
             <div className="right">
               <PersonOutlinedIcon />
               <EmailOutlinedIcon />
-              <LogoutIcon />
+              <Link to={"/login"}>
+                <LogoutIcon onClick={handleLogout}/>
+              </Link>
               <Link
                 to={`/profile/${currentUser.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
