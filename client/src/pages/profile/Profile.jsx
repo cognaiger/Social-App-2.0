@@ -92,7 +92,7 @@ const Profile = () => {
             </a>
           </div>
           <div className="center">
-            <span>{data.username}</span>
+            <span>{data.name}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
