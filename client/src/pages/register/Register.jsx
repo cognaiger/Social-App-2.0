@@ -13,6 +13,7 @@ const Register = () => {
   });
 
   const [err, setErr] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     setInputs((prev) => ({...prev, [e.target.name] : e.target.value }));
@@ -23,8 +24,11 @@ const Register = () => {
 
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
+      setSuccessMessage("User created successfully!")
+      setErr(null);
     } catch (err) {
       setErr(err.response.data);
+      setSuccessMessage("");
     }
   };
 
@@ -52,6 +56,7 @@ const Register = () => {
             <input type="email" placeholder="Email" name="email" onChange={handleChange} />
             <input type="password" placeholder="Password" name="password" onChange={handleChange} />
             <input type="text" placeholder="Name" name="name" onChange={handleChange} />
+            {successMessage && successMessage}
             {err && err}
             <button onClick={handleClick}>Register</button>
           </form>
