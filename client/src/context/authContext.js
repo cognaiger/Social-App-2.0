@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
  
   const updateCurrentUser = async () => {
     try {
-      console.log("current USer" + currentUser);
+      console.log("current user" + currentUser);
       const res = await makeRequest.get(`/users/find/${currentUser.id}`);
       setCurrentUser(res.data);
     } catch (error) {
